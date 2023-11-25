@@ -119,6 +119,7 @@ def send_header(client, status_code=200, content_length=None ):
     client.sendall("Content-Type: text/html\r\n")
     if content_length is not None:
       client.sendall("Content-Length: {}\r\n".format(content_length))
+    client.sendall("Connection: close\r\n") # disabling keep-alive
     client.sendall("\r\n")
 
 
@@ -312,19 +313,27 @@ def start(port=80):
     print('Listening on:', addr)
 
     while True:
+        print("Back to the top of the loop")
         if wlan_sta.isconnected():
+            print("We're connected!")
             return True
 
+        print("server_socket.accept")
         client, addr = server_socket.accept()
         print('client connected from', addr)
         try:
+            print("Setting timeout")
             client.settimeout(5.0)
 
+            print("Setting request")
             request = b""
+            
+            print("Waiting for client to send something")
             try:
                 while "\r\n\r\n" not in request:
                     request += client.recv(512)
             except OSError:
+                print(OSError)
                 pass
 
             print("Request is: {}".format(request))
@@ -349,5 +358,6 @@ def start(port=80):
                 handle_not_found(client, url)
 
         finally:
+            print("Closing client")
             client.close()
 
