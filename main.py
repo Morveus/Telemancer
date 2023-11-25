@@ -6,15 +6,25 @@ import os
 import ubluetooth
 import ubinascii
 import utime
-import tele_tokens as tokens
-import tele_actions as actions
-from tele_buttons import Button, ButtonConfig
+import telemancer.tele_tokens as tokens
+import telemancer.tele_actions as actions
+from telemancer.tele_buttons import Button, ButtonConfig
 import _thread, urequests, json
 
 try:
   import usocket as socket
 except:
   import socket
+  
+#dir_path = '/'
+
+#if not os.path.isdir(dir_path):
+#    os.mkdir(dir_path)
+
+current_directory = os.getcwd()
+print("current directory : " + current_directory)
+
+print("HEEEEEEEEEEEY")
   
 def get_ble_mac():
     ble = ubluetooth.BLE()
@@ -117,4 +127,3 @@ while True:
   except OSError as e:
     conn.close()
     print('Connection closed')
-
