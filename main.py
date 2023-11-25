@@ -1,10 +1,15 @@
 import wifimgr
-from machine import Timer, Pin
+from machine import Timer
 from time import sleep
 import machine
 import os
 import ubluetooth
 import ubinascii
+import utime
+import tele_tokens as tokens
+import tele_actions as actions
+from tele_buttons import Button, ButtonConfig
+import _thread, urequests, json
 
 try:
   import usocket as socket
@@ -23,35 +28,9 @@ ble_mac = get_ble_mac()
 first_four = ble_mac.replace(":", "")[:4]
 device_name = "Telemancer " + first_four
 
-print("Full BLE MAC Address:", ble_mac)
-print("First four characters:", first_four)
-  
-class BLE:
-    def __init__(self, name):
-        self.name = name
-        self.ble = ubluetooth.BLE()
-        self.ble.active(True)
-        self.ble.irq(self._ble_irq)
-        self.register()
-        self._advertise()
+current_tokens = tokens.read_tokens()
+print(current_tokens)
 
-    def _ble_irq(self, event, data):
-        pass  # IRQ events can be handled here
-
-    def register(self):
-        # Nordic UART Service (NUS)
-        UUID = ubluetooth.UUID('6E400001-B5A3-F393-E0A9-E50E24DCCA9E')
-        self.nus = ubluetooth.Service(UUID, isprimary=True)
-        # Create characteristics
-        # ...
-
-    def _advertise(self, interval_us=500000):
-        name = bytes(self.name, 'UTF-8')
-        self.ble.gap_advertise(interval_us, adv_data=name)
-
-ble = BLE(device_name)
-
-led = machine.Pin(2, machine.Pin.OUT)
 
 wlan = wifimgr.get_connection()
 if wlan is None:
@@ -60,7 +39,22 @@ if wlan is None:
         pass  # you shall not pass :D
 
 # Main Code goes here, wlan is a working network.WLAN(STA_IF) instance.
-print("ESP OK")
+print("ESP OK -- Starting Telemancer")
+
+def sendHTTPRequest(url, token = ""):
+    headers = {}
+    
+    if token != "":
+        headers = {
+            "Authorization": "Bearer "+token,
+            "Content-Type": "application/json"
+        }
+    response = urequests.get(url)
+    response.close()
+
+
+while True:
+    actions.check_buttons()
 
 def web_page():
   if led.value() == 1:
