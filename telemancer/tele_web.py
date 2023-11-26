@@ -2,6 +2,8 @@
 import os, json
 import telemancer.tele_tokens as tokens
 import telemancer.tele_profiles as profiles
+import telemancer.tele_buzzer as buzzer
+from telemancer.tele_buttons import Button, ButtonConfig
 
 web_folder = "/web/"
 
@@ -12,6 +14,8 @@ def load_content(filename, web_context = ""):
         return get_profiles()
     if filename == 'stats.json':
         return get_stats(web_context)
+    if filename == 'buttons.json':
+        return get_buttons()
     
     try:
         with open(web_folder+filename, 'r') as file:
@@ -49,11 +53,30 @@ def process_api_call(endpoint, request):
         for profile_num, name in json_object.items():
             profiles.add_profile(profile_num, name)
         return get_profiles()
+    
+    if endpoint == "updateButton":
+        button_config = ButtonConfig()
+        button_config.update_button(json_object['profile'], json_object['name'],
+                                    custom_name=json_object['custom_name'],
+                                    repeatable=json_object['repeatable'],
+                                    interval=json_object['interval'],
+                                    url=json_object['url'],
+                                    token_id=json_object['token_id'],
+                                    payload=json_object['payload'])
+        buzzer.play_startup_sound()
+        return get_tokens()
 
     return ''
     
 def get_tokens():
     return tokens.get_json_from_storage()
+
+def get_buttons():
+    button_config = ButtonConfig()
+    buttons_list = button_config.load_buttons()
+    buttons_dict_list = [button.to_dict() for button in buttons_list]
+    json_data = json.dumps(buttons_dict_list)    
+    return json_data
 
 def get_profiles():
     return profiles.get_json_from_storage()

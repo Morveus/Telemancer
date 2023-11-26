@@ -1,0 +1,190 @@
+<h2>Button Configuration Form</h2>
+
+<div class="tab">
+    Profile:<br />
+    <button class="tablinks" id="profile-btn1" onclick="switchProfile(1)">1</button>
+    <button class="tablinks" id="profile-btn2" onclick="switchProfile(2)">2</button>
+    <button class="tablinks" id="profile-btn3" onclick="switchProfile(3)">3</button>
+    <button class="tablinks" id="profile-btn4" onclick="switchProfile(4)">4</button>
+</div>
+<div class="btns">
+    Buttons:<br />
+    <button class="tablinks" onclick="switchButton(this)">Up</button>
+    <button class="tablinks" onclick="switchButton(this)">Down</button>
+    <button class="tablinks" onclick="switchButton(this)">Left</button>
+    <button class="tablinks" onclick="switchButton(this)">Right</button>
+    <button class="tablinks" onclick="switchButton(this)">Ok</button>
+    <button class="tablinks" onclick="switchButton(this)">Back</button>
+    <button class="tablinks" onclick="switchButton(this)">Home</button>
+    <button class="tablinks" onclick="switchButton(this)">Power</button>
+</div>
+
+<div id="button-editor" style="display: none;">
+    <h4>Custom Name for <span id="custom_name_span"></span> in "<span id="custom_profile_span"></span>"</h4>
+    <p><input type="text" id="button_custom_name" /></p>
+    
+    <h4>URL</h4>
+    <p>
+        <input type="text" id="button_url" />
+        <select id="tokens_list">
+            <option value="none">Loading, please wait...</option>
+        </select>
+    </p>
+    
+    <h4>Optional Payload</h4>
+    <p>
+        <input type="text" id="button_payload" />
+    </p>
+    
+    <h4>Parameters</h4>
+    <p>
+        <input type="checkbox" id="button_repeatable" name="button_repeatable" /> <label for="button_repeatable">Repeatable</label> <br />
+        <input type="text" id="button_interval" name="button_interval" /> <label for="button_interval">Repeat Interval (ms > 200)</label> <br />
+    </p>
+    
+    <div>
+        <input type="button" id="update-btn" value="Update Button" onclick="updateButton()" />
+    </div>
+</div>
+
+<script>    
+    window.buttonsList = '';
+    window.selectedButton = '';
+    window.selectedProfile = 1;
+    window.selectedProfileName = "Profile 1";
+    
+    window.switchProfile = function(p){
+        console.log("Profile : " + p);
+        window.selectedProfile = p;
+    };
+    
+    window.updateProfileName = function(){
+        window.selectedProfileName = document.getElementById('profile-btn'+window.selectedProfile).innerHTML;
+    };
+    
+    window.switchButton = function(btn){
+        console.log("Button : " + btn.innerText);
+        window.selectedButton = btn.innerText.toLowerCase();
+        
+        window.loadButton();
+    };
+    
+    window.updateButton = function(){
+        let buttonData = {};
+        buttonData['name'] = window.selectedButton;
+        buttonData['custom_name'] = document.getElementById('button_custom_name').innerHTML;
+        buttonData['profile'] = window.selectedProfile;
+        buttonData['url'] = document.getElementById('button_url').value;
+        buttonData['repeatable'] = document.getElementById('button_repeatable').checked;
+        buttonData['interval'] = document.getElementById('button_interval').value;
+        buttonData['token_id'] = document.getElementById('tokens_list').value;
+        buttonData['payload'] = document.getElementById('button_payload').value;
+
+        let requestBody = JSON.stringify(buttonData);
+        console.log(requestBody);
+            
+        fetch('/api/updateButton', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: requestBody
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Button updated successfully");
+                // Reload the token list
+                reloadProfiles();
+            } else {
+                console.error("Failed to update button");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+    
+    window.loadButton = function(){
+        console.log("loadButton");
+        window.updateProfileName();
+        window.buttonsList.forEach((button) => {
+            if(button.button_name == window.selectedButton && button.program == window.selectedProfile){
+                console.log("Found your button");
+                console.log(button);
+                
+                document.getElementById('custom_name_span').innerHTML = button.custom_name;
+                document.getElementById('custom_profile_span').innerHTML = window.selectedProfileName;
+                document.getElementById('button_custom_name').value = button.custom_name;
+                document.getElementById('button_url').value = button.url;
+                document.getElementById('button_repeatable').checked = button.repeatable;
+                document.getElementById('button_interval').value = button.interval;
+                document.getElementById('tokens_list').value = button.token_id;
+                document.getElementById('button_payload').value = button.payload;
+                
+                document.getElementById('button-editor').style.display = "block";
+               
+            }
+        })
+    };
+    
+    window.loadButtons = function() {
+        fetch('/buttons.json')
+        .then(response => response.json())
+        .then(buttons => { 
+            window.buttonsList = buttons;
+            console.log(window.buttonsList);
+        })
+        .catch(error => console.error('Error fetching tokens.json:', error));
+    };
+    
+    loadButtons(); // has to be called after declaration, because if the window.function attachment
+    // Note: this is required because we eval this <script> tag contents, which causes scoping issues
+    
+    window.reloadProfiles = function() {
+        fetch('/profiles.json')
+        .then(response => response.json())
+        .then(profiles => { 
+            console.log(profiles);
+            profiles.forEach(function(profile) {
+                console.log(profile);
+                var i = profile.profile_number;
+                var n = profile.profile_name;
+                
+                document.getElementById('profile-btn'+i).innerHTML = n;
+            });
+        })
+        .catch(error => console.error('Error fetching tokens.json:', error));
+    };
+    
+    reloadProfiles(); // has to be called after declaration, because if the window.function attachment
+    
+    window.reloadTokens = function() {
+        var selectElement = document.getElementById('tokens_list');
+        fetch('/tokens.json')
+        .then(response => response.json())
+        .then(tokens => { 
+            console.log(tokens);
+            
+            selectElement.innerHTML = '';
+            var option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'No Token Required';
+            selectElement.appendChild(option);
+                
+            tokens.forEach(function(token) {
+                console.log('Token ID:', token.token_id);
+                console.log('Token Name:', token.token_name);
+                console.log('Token Value:', token.token_value);
+                
+                var option = document.createElement('option');
+                option.value = token.token_id;
+                option.textContent = token.token_name;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching tokens.json:', error));
+    };
+    
+    reloadTokens(); // has to be called after declaration, because if the window.function attachment
+    // Note: this is required because we eval this <script> tag contents, which causes scoping issues
+</script>

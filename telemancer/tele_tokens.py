@@ -54,3 +54,13 @@ def remove_token(token_id):
     tokens = [token for token in tokens if token['token_id'] != token_id]
     write_tokens(tokens)
     return read_tokens()
+
+def get_token(token_id):
+    tokens = read_tokens()
+    
+    for token in tokens:
+        if token['token_id'] == token_id:
+            return token
+
+    # Return None or an appropriate response if the token is not found
+    return None

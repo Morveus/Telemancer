@@ -2,7 +2,7 @@ import json
 from machine import Pin
 
 class Button:
-    def __init__(self, program, button_name, gpio, custom_name=None, repeatable=False, interval=50, longpress=0, url=None, longpress_url=None, token_id=None):
+    def __init__(self, program, button_name, gpio, custom_name=None, repeatable=False, interval=50, longpress=0, url=None, longpress_url=None, token_id=None, payload=None, endpoint=None):
         self.program = program
         self.button_name = button_name
         self.custom_name = custom_name or button_name
@@ -13,6 +13,7 @@ class Button:
         self.longpress_url = longpress_url
         self.token_id = token_id
         self.gpio = gpio
+        self.payload = payload
         
         # Do not ever store these values on the flash
         self.pin = False
@@ -29,7 +30,8 @@ class Button:
             "url": self.url,
             "longpress_url": self.longpress_url,
             "token_id": self.token_id,
-            "gpio": self.gpio
+            "gpio": self.gpio,
+            "payload": self.payload
         }
 
 class ButtonConfig:
@@ -98,7 +100,8 @@ class ButtonConfig:
                     longpress=200, 
                     url="http://localhost/changeme", 
                     longpress_url="http://localhost/changeme", 
-                    token_id=""
+                    token_id="",
+                    payload=""
                 )
                 self.add_button(button)
         
