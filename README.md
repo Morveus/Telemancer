@@ -3,7 +3,16 @@
 
 Prototype / Work in Progress
 
-I've been looking for a good-looking, functional remote that can interact with my home automation setup. I've never been able to find something that works for me.
+I've been looking for a good-looking, functional remote that can interact with my home automation setup. I've never been able to find something that works for me:
+
+* That is simple,
+* Open Source,
+* Can interact with HTTP ; I don't care about infrared or RF, because my HomeAssistant instance can act as a bridge,
+* Isn't tied to a hub: the calls would originate directly from the device,
+* Isn't Not cloud-based,
+* Isn't subscription-based,
+* Can work with Kodi
+* Isn't a smartphone : can be used in the dark, with buttons you can feel with your fingers and know which one does which without looking
 
 The idea is to build a WiFi remote that will send HTTP/HTTPS API calls to any endpoint (to me, it will be HomeAssistant, Yamaha MusicCast, Kodi, Philips Hue...). I also very much like the nVidia Shield remote's form factor, so that's the idea I've asked a CAD designer to work on.
 
