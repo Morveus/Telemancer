@@ -22,6 +22,7 @@ The idea is to build a WiFi remote that will send HTTP/HTTPS API calls to any en
 Here's a TODO of the project and my current advancement:
 
  - 🟢 ESP32 running MicroPython
+ - 🔴 Catching exceptions
  - 🟢 Rudimentary Web WiFi Setup
  - 🟢 Rudimentary Web Server
  - 🟢 Multiple Profiles (for instance 1 = Kodi, 2 = Trinnov, 3 = HomeAssistant, 4 = Yamaha)
