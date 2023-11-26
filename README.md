@@ -36,7 +36,7 @@ Here's a TODO of the project and my current advancement:
  - 🔴 (Maybe) backlit buttons
  - 🟠 Nice Web Interface
  - 🔴 PCB design (made by a friend)
- - 🟠 Prototype mechanical design
+ - 🟠 Prototype mechanical design (awaiting quotations $$$)
 	 - 🔴 First, 3D printable
 	 - 🔴 Then, prototyped with silicon mold injection
  - 🔴 Beeper, to allow you to find the remote when lost between the seats by sending an HTTP call to its internal webserver
