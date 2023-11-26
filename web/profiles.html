@@ -1,0 +1,69 @@
+<h2>Profiles Management</h2>
+
+<h3>Profile 1</h3>
+<input type="text" class="profile_input" id="profile1" value="..." />
+
+<h3>Profile 2</h3>
+<input type="text" class="profile_input" id="profile2" value="..." />
+
+<h3>Profile 3</h3>
+<input type="text" class="profile_input" id="profile3" value="..." />
+
+<h3>Profile 4</h3>
+<input type="text" class="profile_input" id="profile4" value="..." />
+
+<p>
+        <input type="button" value="Update Profiles Names" onclick="updateProfiles()" />
+</p>
+
+<script>
+    window.updateProfiles = function() {
+        let profilesData = {};
+
+        for (let i = 1; i <= 4; i++) {
+            profilesData[i] = document.getElementById('profile' + i).value;
+        }
+
+        let requestBody = JSON.stringify(profilesData);
+        console.log(requestBody);
+            
+        fetch('/api/updateProfiles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: requestBody
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Token added successfully");
+                // Reload the token list
+                reloadProfiles();
+            } else {
+                console.error("Failed to add token");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+    
+    window.reloadProfiles = function() {
+        fetch('/profiles.json')
+        .then(response => response.json())
+        .then(profiles => { 
+            console.log(profiles);
+            profiles.forEach(function(profile) {
+                console.log(profile);
+                var i = profile.profile_number;
+                var n = profile.profile_name;
+                
+                document.getElementById('profile'+i).value = n;
+            });
+        })
+        .catch(error => console.error('Error fetching tokens.json:', error));
+    };
+    
+    reloadProfiles(); // has to be called after declaration, because if the window.function attachment
+    // Note: this is required because we eval this <script> tag contents, which causes scoping issues
+</script>

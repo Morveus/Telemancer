@@ -10,15 +10,44 @@
     <nav>
         <div id="burger-menu" onclick="toggleMenu()">☰</div>
         <ul id="menu-items" class="hidden">
+            <li><a href="/">Home</a></li>
             <li><a href="#button-settings" class="page-link">Button Settings</a></li>
             <li><a href="#profiles" class="page-link">Profiles</a></li>
             <li><a href="#tokens" class="page-link">Tokens</a></li>
         </ul>
     </nav>
     <div id="content">
+        <p style="text-align: center;"><img src="logo_8bit.png" alt="Telemancer Logo" title="Telemancer Logo" /></p>
         <p style="text-align: center;">Please select an option in the menu</p>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
 
+<script>
+window.onload = function() {
+    fetch('/stats.json')
+        .then(response => response.json())
+        .then(data => {
+            const ip = data.ip;
+            const ap = data.ap;
+            const uptime = data.uptime;
+
+            // Convert uptime in seconds to days, hours, minutes, seconds
+            const days = Math.floor(uptime / (3600*24));
+            const hours = Math.floor(uptime % (3600*24) / 3600);
+            const minutes = Math.floor(uptime % 3600 / 60);
+            const seconds = Math.floor(uptime % 60);
+            
+            var stats_message = '<div id="stats">';
+            stats_message += "Connected to <strong>"+ap+"</strong><br />";
+            stats_message += "IP <strong>"+ip+"</strong><br />";
+            stats_message += "Up for "+days+" days, "+hours+" hours, "+minutes+" minutes, "+seconds+" seconds</div>";
+
+            document.getElementById('content').innerHTML += stats_message;
+        })
+        .catch(error => console.error('Error:', error));
+
+};
+</script>

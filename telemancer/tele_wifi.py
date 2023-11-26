@@ -20,11 +20,16 @@ def create_file_if_not_exists(filename):
 NETWORK_PROFILES = '/config/wifi.dat'
 create_file_if_not_exists(NETWORK_PROFILES)
 
-
 wlan_ap = network.WLAN(network.AP_IF)
 wlan_sta = network.WLAN(network.STA_IF)
 
 server_socket = None
+
+def get_ip():
+    return wlan_sta.ifconfig()[0]
+
+def get_ap():
+    return wlan_sta.config('essid')
 
 
 def get_connection():

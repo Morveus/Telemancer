@@ -5,6 +5,7 @@ import ubluetooth,telemancer.tele_wifi as wifimgr, ubinascii
 import telemancer.tele_tokens as tokens
 import telemancer.tele_actions as actions
 import telemancer.tele_web as web
+import telemancer.tele_profiles as profiles
 from telemancer.tele_buttons import Button, ButtonConfig
 
 try:
@@ -29,6 +30,11 @@ device_name = "Telemancer " + first_four
 current_tokens = tokens.read_tokens()
 print(current_tokens)
 
+print("Init profiles...")
+profiles.init_profiles()
+
+print(profiles.read_profiles())
+
 wlan = wifimgr.get_connection()
 if wlan is None:
     print("Could not initialize the network connection.")
@@ -46,8 +52,17 @@ try:
 except OSError as e:
   machine.reset()
 
+
+web_context = {
+    'ip': wifimgr.get_ip(),
+    'ap': wifimgr.get_ap(),
+    'uptime': utime.time()
+}
+
 while True:
   try:
+    web_context['uptime'] = utime.time()
+    
     if gc.mem_free() < 102000:
       gc.collect()
     conn, addr = s.accept()
@@ -55,29 +70,34 @@ while True:
     print('Got a connection from %s' % str(addr))
     request = conn.recv(1024)
     conn.settimeout(None)
-    request = str(request)
-    ##print('Content = %s' % request)
+    req_bytes = request
+    req_str = str(request)
     
-    # Find the start and end of the file name
-    start = request.find('GET /') + len('GET /')
-    end = request.find(' ', start)
+    if 'GET /' in req_str:
+        print("GET request")
+        # Find the start and end of the file name
+        start = req_str.find('GET /') + len('GET /')
+        end = req_str.find(' ', start)
 
-    # Extract the file name
-    file_name = request[start:end]
-    if file_name == "":
-        file_name = "index"
+        # Extract the file name
+        file_name = req_str[start:end]
+        if file_name == "":
+            file_name = "index"
 
-    print('Requested file:', file_name)
+        actions.check_buttons()
+        response = web.load_content(file_name, web_context)
+    
+    elif 'POST /' in req_str:
+        print("POST request")
+        start = req_str.find('POST /api/') + len('POST /api/')
+        end = req_str.find(' ', start)
+        endpoint = req_str[start:end]
+        response = web.process_api_call(endpoint, req_bytes)
 
-    actions.check_buttons()
-
-    response = web.load_content(file_name)
     conn.send('HTTP/1.1 200 OK\n')
-    #conn.send('Content-Type: text/html\n')
     conn.send('Connection: close\n\n')
     conn.sendall(response)
     conn.close()
   except OSError as e:
     conn.close()
     print('Connection closed')
-

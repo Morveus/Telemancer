@@ -15,6 +15,13 @@ def read_tokens():
         write_tokens([])
         return []
 
+def get_json_from_storage():
+    try:
+        with open(filename, 'r') as file:
+            return file.read()
+    except:
+        return ''
+
 def write_tokens(tokens):
     with open(filename, 'w') as file:
         json.dump(tokens, file)
@@ -42,7 +49,8 @@ def add_token(token_name, token_value):
     write_tokens(tokens)
 
 
-def remove_token(filename, token_id):
-    tokens = read_tokens(filename)
+def remove_token(token_id):
+    tokens = read_tokens()
     tokens = [token for token in tokens if token['token_id'] != token_id]
     write_tokens(tokens)
+    return read_tokens()

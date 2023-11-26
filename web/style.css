@@ -46,3 +46,10 @@ nav {
     border-radius: 5px;
 }
 
+.profile_input {
+    width: 250px;
+}
+
+#stats {
+    font-size: 0.8em;
+} 

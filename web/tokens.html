@@ -1,13 +1,114 @@
-TOKENS
+<h2>API Token Management</h2>
+
+<select id="tokens_list">
+    <option value="none">Loading, please wait...</option>
+</select>
+
+<input type="button" id="delete_token_button" value="Delete this token" onclick="deleteToken()" />
+
+<form id="tokenForm">
+    <div>
+        <label for="token_name">Token Name:</label>
+        <input type="text" id="token_name" name="token_name">
+    </div>
+    <div>
+        <label for="token_value">Token Value:</label>
+        <input type="text" id="token_value" name="token_value">
+    </div>
+    <div>
+        <button type="button" onclick="addToken()">Add Token</button>
+    </div>
+</form>
 
 <script>
-
-fetch('/tokens.json')
-    .then(response => response.text())  // Parse the response as JSON with .json instead of .text
-    .then(data => { 
-        const contentDiv = document.getElementById('content');
-        contentDiv.innerHTML = contentDiv.innerHTML + data;
-    })
-    .catch(error => console.error('Error fetching tokens.json:', error));
-
+    window.addToken = function() {
+        console.log(token_name.value);
+        console.log(token_value.value);
+        
+        fetch('/api/addToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "token_name": token_name.value, "token_value": token_value.value })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Token added successfully");
+                // Reload the token list
+                reloadTokens();
+            } else {
+                console.error("Failed to add token");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+        // Reload contents
+        reloadTokens();
+    };
+    
+    window.deleteToken = function() {
+        id_todelete = selectElement.value;
+        
+        fetch('/api/deleteToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token_id: id_todelete })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Token deleted successfully");
+                // Reload the token list
+                reloadTokens();
+            } else {
+                console.error("Failed to delete token");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+        // Reload contents
+        reloadTokens();
+    };
+    
+    var selectElement = document.getElementById('tokens_list');
+    var token_name = document.getElementById('token_name');
+    var token_value = document.getElementById('token_value');
+    
+    window.reloadTokens = function() {
+        fetch('/tokens.json')
+        .then(response => response.json())
+        .then(tokens => { 
+            console.log(tokens);
+            
+            selectElement.innerHTML = '';
+            var option = document.createElement('option');
+            option.value = '';
+            option.textContent = '--ADD A NEW TOKEN--';
+            selectElement.appendChild(option);
+                
+            tokens.forEach(function(token) {
+                console.log('Token ID:', token.token_id);
+                console.log('Token Name:', token.token_name);
+                console.log('Token Value:', token.token_value);
+                
+                var option = document.createElement('option');
+                option.value = token.token_id;
+                option.textContent = token.token_name;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching tokens.json:', error));
+        
+        token_name.value = '';
+        token_value.value = '';
+    };
+    
+    reloadTokens(); // has to be called after declaration, because if the window.function attachment
+    // Note: this is required because we eval this <script> tag contents, which causes scoping issues
 </script>
