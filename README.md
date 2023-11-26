@@ -16,7 +16,7 @@ I've been looking for a good-looking, functional remote that can interact with m
 
 The idea is to build a WiFi remote that will send HTTP/HTTPS API calls to any endpoint (to me, it will be HomeAssistant, Yamaha MusicCast, Kodi, Philips Hue...). I also very much like the nVidia Shield remote's form factor, so that's the idea I've asked a CAD designer to work on.
 
-Here's a TODO of the project:
+Here's a TODO of the project and my current advancement:
 
  - 🟢 ESP32 running MicroPython
  - 🟢 Rudimentary Web WiFi Setup
