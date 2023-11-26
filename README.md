@@ -17,10 +17,10 @@ Here's a TODO of the project:
  - 🟢 Power and Reset Buttons
  - 🟢 Back and Home buttons
  - 🟢 Customizable behaviors: 
-	 - 🟢 Buttons can be set to "Press Once"
-	 - 🟢 Buttons can be set to "Press and repeat until released"
-	 - 🟢 Repeat rate can be changed (in millisecond) for each button
-	 - 🟢 Buttons can have a secondary 
+	 - 🟢 Buttons can be set to "Press Once" (holding a button set to this mode won't send the same command twice)
+	 - 🟢 Buttons can be set to "Press and repeat until released" (holding a button will repeat the same command, useful for navigation and volume)
+	 - 🟢 Repeat rate can be changed (in millisecond) for each button (when set to "Repeatable")
+	 - 🟢 Buttons can have a secondary mode, when held for X milliseconds, and trigger a different HTTP call
  - 🟠 WiFi connectivity
  - 🔴 4 diodes that tell you which profile is currently set
  - 🔴 (Maybe) backlit buttons
