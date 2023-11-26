@@ -12,7 +12,7 @@ Here's a TODO of the project:
  - 🟢 ESP32 running MicroPython
  - 🟢 Rudimentary Web WiFi Setup
  - 🟢 Rudimentary Web Server
- - 🟢 Multiple Profiles
+ - 🟢 Multiple Profiles (for instance 1 = Kodi, 2 = Trinnov, 3 = HomeAssistant, 4 = Yamaha)
  - 🟢 Up, Down, Left, Right, OK buttons
  - 🟢 Power and Reset Buttons
  - 🟢 Back and Home buttons
