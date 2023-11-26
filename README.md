@@ -37,7 +37,11 @@ Here's a TODO of the project and my current advancement:
  - 🟠 WiFi connectivity
  - 🔴 4 diodes that tell you which profile is currently set
  - 🔴 (Maybe) backlit buttons
- - 🟠 Nice Web Interface
+ - 🟠 Web Interface
+ 	- 🟢 Profile Names Management
+  	- 🟢 Adding and Deleting API tokens
+   	- 🟠 Managing buttons settings
+   	- 🔴 Prettier UI/UX (ultimately limited, but not an excuse for an ugly UI)
  - 🔴 PCB design (made by a friend)
  - 🟠 Prototype mechanical design (awaiting quotations $$$)
 	 - 🔴 First, 3D printable
