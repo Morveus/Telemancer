@@ -3,6 +3,9 @@
 
 Prototype / Work in Progress
 
+![image](https://github.com/Morveus/Telemancer/assets/2972468/63ad82e1-7ff8-4c64-8254-00084e66bb1d)
+
+
 I've been looking for a good-looking, functional remote that can interact with my home automation setup. I've never been able to find something that works for me:
 
 * That is simple,
