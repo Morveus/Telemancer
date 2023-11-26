@@ -9,7 +9,7 @@ The idea is to build a WiFi remote that will send HTTP/HTTPS API calls to any en
 
 Here's a TODO of the project:
 
- - ✔️ ESP32 running MicroPython
+ - 🟢 ESP32 running MicroPython
  - [x] Rudimentary Web WiFi Setup
  - [x] Rudimentary Web Server
  - [x] Multiple Profiles
