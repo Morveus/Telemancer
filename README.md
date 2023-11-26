@@ -39,14 +39,14 @@ Here's a TODO of the project and my current advancement:
 	 - 🔴 First, 3D printable
 	 - 🔴 Then, prototyped with silicon mold injection
  - 🔴 Beeper, to allow you to find the remote when lost between the seats by sending an HTTP call to its internal webserver
- - 🔴 Accelerometer allowing the backlight and profile LEDs to turn on (like on the nVidia Shield remote)
+ - 🔴 Accelerometer allowing the backlight and profile LEDs to turn on when the remote is picked up (like on the nVidia Shield remote), before turning off after a specified, customizable amount of time
  - 🔴 Battery (18650) and charger
- - 🔴 USB-C
- - 🔴 Charging base
+ - 🔴 USB-C connector
 
 Maybe later, depending on how successful this project is:
  - 🔴 Infrared
  - 🔴 Bluetooth
+ - 🔴 Charging base/dock
 
 ![image](https://github.com/Morveus/Telemancer/assets/2972468/af39033d-38a7-4694-a77c-d320b26f7710)
 
