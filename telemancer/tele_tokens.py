@@ -5,7 +5,7 @@ import utime
 import hashlib
 import binascii
 
-filename = 'token_data.json'
+filename = '/config/token_data.json'
 
 def read_tokens():
     try:
@@ -46,4 +46,3 @@ def remove_token(filename, token_id):
     tokens = read_tokens(filename)
     tokens = [token for token in tokens if token['token_id'] != token_id]
     write_tokens(tokens)
-

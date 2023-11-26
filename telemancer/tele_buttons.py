@@ -33,7 +33,7 @@ class Button:
         }
 
 class ButtonConfig:
-    def __init__(self, filename='button_config.json'):
+    def __init__(self, filename='/config/button_config.json'):
         self.filename = filename
         self.buttons = []
         self.load_buttons()
@@ -103,4 +103,3 @@ class ButtonConfig:
                 self.add_button(button)
         
         self.save_buttons()
-

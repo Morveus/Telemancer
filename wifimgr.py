@@ -17,7 +17,7 @@ def create_file_if_not_exists(filename):
             pass  # This creates an empty file
 
 # Usage
-NETWORK_PROFILES = 'wifi.dat'
+NETWORK_PROFILES = '/config/wifi.dat'
 create_file_if_not_exists(NETWORK_PROFILES)
 
 
@@ -360,4 +360,3 @@ def start(port=80):
         finally:
             print("Closing client")
             client.close()
-
