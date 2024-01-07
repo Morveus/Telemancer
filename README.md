@@ -1,4 +1,3 @@
-
 # Telemancer Remote Controller
 
 Prototype / Work in Progress
@@ -42,7 +41,7 @@ Here's a TODO of the project and my current advancement:
   	- 🟢 Adding and Deleting API tokens
    	- 🟠 Managing buttons settings
    	- 🔴 Prettier UI/UX (ultimately limited, but not an excuse for an ugly UI)
- - 🔴 PCB design (made by a friend)
+ - 🔴 PCB design
  - 🟠 Prototype mechanical design (awaiting quotations $$$)
 	 - 🔴 First, 3D printable
 	 - 🔴 Then, prototyped with silicon mold injection
