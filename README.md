@@ -55,6 +55,12 @@ Maybe later, depending on how successful this project is:
  - 🔴 Bluetooth
  - 🔴 Charging base/dock
 
+# Prototype pictures (v0.0001)
+![signal-2023-11-29-113144_014](https://github.com/Morveus/Telemancer/assets/2972468/ea119a3c-d809-4ee8-b69c-de04ccb40d2e)
+![signal-2023-11-29-113144_012](https://github.com/Morveus/Telemancer/assets/2972468/4c99aa94-8ce5-45af-b5b0-efba9560d814)
+![signal-2023-11-29-113144_010](https://github.com/Morveus/Telemancer/assets/2972468/07d2ba5f-032b-493a-8ba0-1e51ed73ac9d)
+
+
 ![image](https://github.com/Morveus/Telemancer/assets/2972468/af39033d-38a7-4694-a77c-d320b26f7710)
 
 (please don't mind the PCB sketch which is totally random, I don't know anything about PCB design)
