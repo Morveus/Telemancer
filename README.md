@@ -8,7 +8,7 @@ I've been looking for a good-looking, functional remote that can interact with m
 
 * That is simple,
 * Open Source,
-* Can interact with HTTP ; I don't care about infrared or RF, because my HomeAssistant instance can act as a bridge,
+* Can interact with HTTP ; I don't care about infrared or RF, because my HomeAssistant instance can act as a bridge, but IR might be added later in the development
 * Isn't tied to a hub: the calls would originate directly from the device,
 * Isn't Not cloud-based,
 * Isn't subscription-based,
