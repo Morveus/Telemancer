@@ -13,7 +13,7 @@ I've been looking for a good-looking, functional remote that can interact with m
 * Is *not* cloud-based,
 * Isn't subscription-based,
 * Can work with Kodi,
-* Isn't a smartphone : can be used in the dark, with buttons you can feel with your fingers and know which one does which without looking,
+* Isn't a smartphone : can be used in the dark, with buttons you can feel with your fingers and know which one does what without looking,
 * Uses a rechargeable battery, ideally a standard one like the 18650 or maybe a bit smaller
 
 The idea is to build a WiFi remote that will send HTTP/HTTPS API calls to any endpoint (to me, it will be HomeAssistant, Yamaha MusicCast, Kodi, Philips Hue...). I also very much like the nVidia Shield remote's form factor, so that's the idea I've asked a CAD designer to work on.
