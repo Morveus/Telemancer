@@ -7,6 +7,11 @@ ap_ssid = "Telemancer Setup"
 ap_password = "1234567890"
 ap_authmode = 3  # WPA2
 
+def create_directory_if_not_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
 def create_file_if_not_exists(filename):
     try:
         with open(filename, 'r') as f:
@@ -18,6 +23,7 @@ def create_file_if_not_exists(filename):
 
 # Usage
 NETWORK_PROFILES = '/config/wifi.dat'
+create_directory_if_not_exists('/config')
 create_file_if_not_exists(NETWORK_PROFILES)
 
 wlan_ap = network.WLAN(network.AP_IF)
